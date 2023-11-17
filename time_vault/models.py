@@ -11,16 +11,16 @@ class Day(BaseModel):
     worktime: str
     net_worktime: str
     breaktime: str
-    sick_or_vac_time: str = ""
+    sick_or_vac_time: str
 
-    @field_validator("started", "stopped", "worktime", "net_worktime", "breaktime")
+    @field_validator("started", "stopped", "worktime", "breaktime")
     @classmethod
     def check_hh_mm(cls, string: str) -> str:
         hh_mm_patern = re.compile(r"^\d{2}:\d{2}$")
         assert hh_mm_patern.match(string)
         return string
 
-    @field_validator("sick_or_vac_time")
+    @field_validator("sick_or_vac_time", "net_worktime")
     @classmethod
     def check_empty_or_hh_mm(cls, string: str) -> str:
         if string != "":
@@ -36,7 +36,6 @@ class Day(BaseModel):
 
 
 class GeneralInfo(BaseModel):
-
     user_name: str
     personal_number: str
     contract_name: str
@@ -63,12 +62,11 @@ class GeneralInfo(BaseModel):
         return string
 
 
-
 class Report(BaseModel):
     days_content: Dict[str, Day]
     general: GeneralInfo
 
-    @field_validator("general")
+    @field_validator("days_content")
     @classmethod
     def check_date_string(cls, dictionary: Dict) -> Dict:
         """
@@ -79,14 +77,15 @@ class Report(BaseModel):
         for key in dictionary.keys():
             datetime.strptime(key, "%d.%m.%Y")
         return dictionary
-# {
-# 	"09.11.2023": {
-# 		"started": "17:00",
-# 		"stopped": "18:00",
-# 		"type": "",
-# 		"worktime": "01:00",
-# 		"net_worktime": "01:00",
-# 		"breaktime": "00:00",
-# 		"sick_or_vac_time": ""
-# 	}
-# }
+
+
+k = {"days_content": {
+    "09.11.2023": {"started": "17:00", "stopped": "18:00", "type": "", "worktime": "01:00", "net_worktime": "01:00",
+                   "breaktime": "00:00", "sick_or_vac_time": ""},
+    "15.11.2023": {"started": "10:00", "stopped": "18:00", "type": "Sick", "worktime": "08:00", "net_worktime": "",
+                   "breaktime": "00:30", "sick_or_vac_time": "07:30"},
+    "16.11.2023": {"started": "10:00", "stopped": "14:00", "type": "", "worktime": "04:00", "net_worktime": "04:00",
+                   "breaktime": "00:00", "sick_or_vac_time": ""}},
+    "general": {"user_name": "Grossmüller, Christian", "personal_number": "", "contract_name": "12", "month": 11,
+                "year": 2023, "long_month_name": "November", "debit_worktime": "12:00", "total_worked_time": "12:30",
+                "last_month_carry_over": "00:00", "next_month_carry_over": "00:30", "net_worktime": "12:30"}}
