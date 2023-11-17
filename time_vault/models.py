@@ -42,7 +42,32 @@ class Day(BaseModel):
 
 
 class GeneralInfo(BaseModel):
-    pass
+
+    user_name: str
+    personal_number: str
+    contract_name: str
+    month: int
+    year: int
+    long_month_name: str
+    debit_worktime: str
+    total_worked_time: str
+    last_month_carry_over: str
+    next_month_carry_over: str
+    net_worktime: str
+
+    @field_validator("total_worked_time", "last_month_carry_over", "next_month_carry_over", "net_worktime")
+    @classmethod
+    def check_hh_mm(cls, string: str) -> str:
+        hh_mm_patern = re.compile(r"\d{2}:\d{2}$")
+        assert hh_mm_patern.match(string)
+        return string
+
+    @field_validator("debit_worktime", "total_worked_time")
+    @classmethod
+    def not_negative_hh_mm(cls, string: str) -> str:
+        assert not string.startswith("-")
+        return string
+
 
 
 class Report(BaseModel):
