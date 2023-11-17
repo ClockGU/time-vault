@@ -12,7 +12,7 @@ class GeneralInfo(BaseModel):
 
 
 class Report(BaseModel):
-    shift_content: Dict[str, Day]
+    days_content: Dict[str, Day]
     general: GeneralInfo
 
     @field_validator("general")
