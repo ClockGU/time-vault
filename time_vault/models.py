@@ -16,7 +16,7 @@ class Day(BaseModel):
     @field_validator("started", "stopped", "worktime", "net_worktime", "breaktime")
     @classmethod
     def check_hh_mm(cls, string: str) -> str:
-        hh_mm_patern = re.compile(r"\d{2}:\d{2}$")
+        hh_mm_patern = re.compile(r"^\d{2}:\d{2}$")
         assert hh_mm_patern.match(string)
         return string
 
@@ -25,12 +25,6 @@ class Day(BaseModel):
     def check_empty_or_hh_mm(cls, string: str) -> str:
         if string != "":
             return cls.check_hh_mm(string)
-        return string
-
-    @field_validator("started", "stopped")
-    @classmethod
-    def not_negative_hh_mm(cls, string: str) -> str:
-        assert not string.startswith("-")
         return string
 
     @model_validator(mode="after")
