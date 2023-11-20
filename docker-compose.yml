@@ -4,6 +4,10 @@ services:
     build:
       context: .
       dockerfile: docker/local/Dockerfile
+    environment:
+      MONGO_URL: mongodb://db_user:db_pass@db:27017/
+    volumes:
+      - ./time_vault:/code/time_vault
     ports:
       - "8000:8000"
 
