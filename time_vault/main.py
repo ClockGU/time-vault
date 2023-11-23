@@ -2,6 +2,9 @@ from fastapi import FastAPI
 
 from .database import save_report_document
 from .models import Report
+from settings import Settings
+
+SETTINGS = Settings()
 
 app = FastAPI()
 
