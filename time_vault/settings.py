@@ -1,7 +1,8 @@
 import os
+from functools import lru_cache
 
 
-class Settings():
+class Settings:
     def __init__(self):
         self.__database_url = os.environ.get("MONGO_URL")
         self.__api_key = os.environ.get("API_KEY")
@@ -23,3 +24,8 @@ class Settings():
     @property
     def REPORT_COLLECTION(self):
         return self.__report_collection
+
+
+@lru_cache()
+def get_settings():
+    return Settings()

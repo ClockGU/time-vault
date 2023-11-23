@@ -6,6 +6,7 @@ services:
       dockerfile: docker/local/Dockerfile
     environment:
       MONGO_URL: mongodb://db_user:db_pass@db:27017/
+      API_KEY: "SOME KEY WE KEEP SECRET"
     volumes:
       - ./time_vault:/code/time_vault
     ports:

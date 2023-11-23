@@ -2,7 +2,9 @@ from pymongo import MongoClient, database
 from pymongo.typings import _DocumentType
 
 from .models import Report
-from .main import SETTINGS
+from .settings import get_settings
+
+SETTINGS = get_settings()
 
 
 def get_time_vault_database() -> database.Database[_DocumentType]:
