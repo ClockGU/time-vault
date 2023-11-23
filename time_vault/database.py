@@ -1,6 +1,7 @@
 from pymongo import MongoClient, database
 from pymongo.typings import _DocumentType
 
+from .models import Report
 import os
 
 TIME_VAULT_DATABASE = "time_vault"
@@ -19,8 +20,8 @@ def get_report_collection() -> database.Collection:
     return get_time_vault_database()[REPORT_COLLECTION]
 
 
-def save_report_document(document) -> _DocumentType:
+def save_report_document(create: Report) -> Report:
     collection = get_report_collection()
+    document = create.model_dump()
     report = collection.insert_one(document)
-
-    return collection.find_one({"_id": report.inserted_id})
+    return Report(**collection.find_one({"_id": report.inserted_id}))
