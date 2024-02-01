@@ -8,6 +8,8 @@ class Day(BaseModel):
     started: str
     stopped: str
     type: str
+    absence_type: str
+    notes: str
     worktime: str
     net_worktime: str
     breaktime: str
