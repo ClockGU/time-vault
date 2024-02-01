@@ -5,7 +5,7 @@ services:
       context: .
       dockerfile: docker/local/Dockerfile
     environment:
-      MONGO_URL: mongodb://db_user:db_pass@db:27017/
+      MONGO_URL: mongodb://db_user:db_pass@time-vault-db:27017/
       API_KEY: "SOME KEY WE KEEP SECRET"
     volumes:
       - ./time_vault:/code/time_vault
@@ -34,7 +34,7 @@ services:
     environment:
       ME_CONFIG_MONGODB_ADMINUSERNAME: db_user
       ME_CONFIG_MONGODB_ADMINPASSWORD: db_pass
-      ME_CONFIG_MONGODB_URL: mongodb://db_user:db_pass@db:27017/
+      ME_CONFIG_MONGODB_URL: mongodb://db_user:db_pass@time-vault-db:27017/
     networks:
       - default
 
