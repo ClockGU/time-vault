@@ -8,6 +8,16 @@ class Settings:
         self.__api_key = os.environ.get("API_KEY")
         self.__time_vault_database = "time_vault"
         self.__report_collection = "reports"
+        self.__debug = os.environ.get("DEBUG", False)
+        self.__sentry_url = os.environ.get("SENTRY_URL", "")
+
+    @property
+    def SENTRY_URL(self):
+        return self.__sentry_url
+
+    @property
+    def DEBUG(self):
+        return self.__debug
 
     @property
     def DATABASE_URL(self):
