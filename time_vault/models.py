@@ -53,7 +53,7 @@ class GeneralInfo(BaseModel):
     @field_validator("total_worked_time", "last_month_carry_over", "next_month_carry_over", "net_worktime")
     @classmethod
     def check_hh_mm(cls, string: str) -> str:
-        hh_mm_patern = re.compile(r"\d{2}:\d{2}$")
+        hh_mm_patern = re.compile(r"-?\d{2}:\d{2}$")
         assert hh_mm_patern.match(string)
         return string
 
