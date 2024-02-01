@@ -8,6 +8,6 @@ from .auth import required_api_key
 app = FastAPI()
 
 
-@app.post("/reports/")
+@app.post("/reports/", status_code=201)
 def save_report(report: Report, api_key: APIKey = Depends(required_api_key)):
     return save_report_document(report)
