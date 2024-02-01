@@ -1,6 +1,6 @@
 version: "3"
 services:
-  web:
+  time-vault-api:
     build:
       context: .
       dockerfile: docker/local/Dockerfile
@@ -10,9 +10,12 @@ services:
     volumes:
       - ./time_vault:/code/time_vault
     ports:
-      - "8000:8000"
+      - "8008:8000"
+    networks:
+      - clock-backend_default
+      - default
 
-  db:
+  time-vault-db:
     image: mongo
     restart: "no"
     environment:
@@ -20,8 +23,10 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: db_pass
     ports:
       - "27017:27017"
+    networks:
+      - default
 
-  db-interface:
+  time-vaultdb-interface:
     image: mongo-express
     restart: "no"
     ports:
@@ -30,3 +35,9 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: db_user
       ME_CONFIG_MONGODB_ADMINPASSWORD: db_pass
       ME_CONFIG_MONGODB_URL: mongodb://db_user:db_pass@db:27017/
+    networks:
+      - default
+
+networks:
+  clock-backend_default:
+    external: true
