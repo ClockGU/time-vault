@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, List, Union
 
 import sentry_sdk
 from fastapi import Depends, FastAPI, Query
@@ -21,11 +21,19 @@ def save_report(report: Report, api_key: APIKey = Depends(required_api_key)):
     return save_report_document(report)
 
 
-@app.get("/retrieve/{month}/{year}", status_code=200)
-def get_reports(references: Annotated[list, Query()], month: int, year: int):
+@app.get("/retrieve/{month}/{year}/", status_code=200)
+def get_reports(
+    month: int,
+    year: int,
+    references: Annotated[list[str], Query()],
+    api_key: APIKey = Depends(required_api_key),
+):
     collection = get_report_collection()
     result = collection.find(
-        {"month": month, "year": year, "general.reference": {"$in": references}}
+        {
+            "general.month": month,
+            "general.year": year,
+            "general.reference": {"$in": references},
+        },
     )
-
-    return map(Report, result)
+    return [Report(**item) for item in result]
