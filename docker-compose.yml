@@ -10,7 +10,7 @@ services:
     volumes:
       - ./time_vault:/code/time_vault
     ports:
-      - "8008:8000"
+      - "8008:8080"
     networks:
       - clock-backend_default
       - default
