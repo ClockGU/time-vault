@@ -12,8 +12,23 @@ fastapi = "^0.104.1"
 pydantic = "^2.5.1"
 uvicorn = "^0.24.0.post1"
 pymongo = "^4.6.0"
-sentry-sdk = {extras = ["fastapi"], version = "^1.40.0"}
+sentry-sdk = { extras = ["fastapi"], version = "^1.40.0" }
+black = "^24.4.2"
+isort = "^5.13.2"
 
+[tool.black]
+exclude = '''
+/(migrations)/
+| /venv
+'''
+line_length = 88
+target_version = ["py310"]
+
+[tool.isort]
+profile = "black"
+py_version = 310
+multi_line_output = 3
+line_length = 88
 
 [build-system]
 requires = ["poetry-core"]
