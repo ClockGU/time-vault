@@ -33,6 +33,7 @@ class GeneralInfo(BaseModel):
     user_name: str
     personal_number: str
     contract_name: str
+    reference: str
     month: int
     year: int
     long_month_name: str
