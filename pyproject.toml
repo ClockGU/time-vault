@@ -8,11 +8,11 @@ packages = []
 
 [tool.poetry.dependencies]
 python = "^3.10"
-fastapi = "^0.104.1"
+fastapi = "^0.111"
 pydantic = "^2.5.1"
 uvicorn = "^0.24.0.post1"
 pymongo = "^4.6.0"
-sentry-sdk = { extras = ["fastapi"], version = "^1.40.0" }
+sentry-sdk = {extras = ["fastapi"], version = "^2.5.1"}
 black = "^24.4.2"
 isort = "^5.13.2"
 
