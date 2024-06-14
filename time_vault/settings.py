@@ -6,9 +6,9 @@ class Settings:
     def __init__(self):
         self.__database_url = os.environ.get("MONGO_URL")
         self.__api_key = os.environ.get("API_KEY")
-        self.__time_vault_database = "time_vault"
+        self.__time_vault_database = os.environ.get("MONGO_DATABASE", "time_vault")
         self.__report_collection = "reports"
-        self.__debug = os.environ.get("DEBUG", False)
+        self.__debug = bool(os.environ.get("DEBUG", False))
         self.__sentry_url = os.environ.get("SENTRY_URL", "")
 
     @property

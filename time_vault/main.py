@@ -1,4 +1,4 @@
-from typing import Annotated, List, Union
+from typing import Annotated
 
 import sentry_sdk
 from fastapi import Depends, FastAPI, Query
@@ -10,10 +10,11 @@ from .models import Report
 from .settings import get_settings
 
 SETTINGS = get_settings()
+
 if SETTINGS.DEBUG is False:
     sentry_sdk.init(dsn=SETTINGS.SENTRY_URL, enable_tracing=True)
 
-app = FastAPI()
+app = FastAPI(debug=SETTINGS.DEBUG)
 
 
 @app.post("/reports/", status_code=201)
