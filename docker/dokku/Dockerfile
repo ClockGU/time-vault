@@ -16,5 +16,5 @@ USER app
 COPY --chown=app:app . /app
 WORKDIR /app
 
-CMD ["fastapi", "run", "time_vault/main.py", "--port", "5000"]
+CMD ["fastapi", "run", "time_vault/main.py","--host", "0.0.0.0", "--port", "5000"]
 
