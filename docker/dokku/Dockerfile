@@ -10,5 +10,5 @@ RUN apt update && apt install -y curl
 RUN curl -sSL https://install.python-poetry.org  | python3 -
 COPY pyproject.toml poetry.lock /
 RUN poetry install
-COPY ./time_vault /app/app
+COPY . /code
 
