@@ -1,8 +1,7 @@
 import datetime
+import logging
 
 from time_vault.database import get_report_collection
-
-from .log import LOGGER
 
 
 def deprovision_reports():
@@ -16,6 +15,7 @@ def deprovision_reports():
     d = collection.delete_many(
         {"general.year": today.year - 2, "general.month": {"$lte": today.month}}
     )
+    LOGGER = logging.getLogger("deprovisioning")
     LOGGER.debug(
         f"{d.deleted_count} reports deleted for month {today.month} in year {today.year - 2}. (Run at {today.strftime('%d.%m.%Y')})"
     )

@@ -9,6 +9,7 @@ from fastapi.security.api_key import APIKey
 
 from .auth import required_api_key
 from .database import get_report_collection, save_report_document
+from .log import setup_logger
 from .models import Report
 from .settings import get_settings
 from .tasks import deprovision_reports
@@ -23,6 +24,8 @@ async def lifespan(app: FastAPI):
 
 
 SETTINGS = get_settings()
+# Setup Logger
+setup_logger()
 
 if SETTINGS.DEBUG is False:
     sentry_sdk.init(dsn=SETTINGS.SENTRY_URL, enable_tracing=True)

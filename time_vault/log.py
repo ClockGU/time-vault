@@ -12,7 +12,7 @@ ROOT_DIR = os.path.dirname(current_directory)
 LOG_ROOT = os.path.join(ROOT_DIR, "logs")
 
 
-def get_logger():
+def setup_logger():
     try:
         os.mkdir(LOG_ROOT)
     except FileExistsError:
@@ -27,7 +27,3 @@ def get_logger():
     )
 
     logger.addHandler(ch)
-    return logger
-
-
-LOGGER = get_logger()
