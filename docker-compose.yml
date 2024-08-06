@@ -8,7 +8,7 @@ services:
       MONGO_URL: mongodb://db_user:db_pass@time-vault-db:27017/
       API_KEY: "SOME KEY WE KEEP SECRET"
     volumes:
-      - ./time_vault:/code/time_vault
+      - .:/code
     ports:
       - "8008:8080"
     networks:
