@@ -1,5 +1,6 @@
 import logging
 import os
+from datetime import datetime
 from logging.handlers import TimedRotatingFileHandler
 
 
@@ -27,3 +28,6 @@ def setup_logger():
     )
 
     logger.addHandler(ch)
+    logger.info(
+        f"INFO: Logger setup at {datetime.now().strftime('%d.%m.%Y - %H:%M:%S')}"
+    )
