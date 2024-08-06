@@ -17,6 +17,9 @@ from .tasks import deprovision_reports
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # Setup Logger
+    setup_logger()
+    # Setup Scheduler
     scheduler = BackgroundScheduler()
     scheduler.add_job(deprovision_reports, trigger=CronTrigger(day=1))
     scheduler.start()
@@ -24,8 +27,6 @@ async def lifespan(app: FastAPI):
 
 
 SETTINGS = get_settings()
-# Setup Logger
-setup_logger()
 
 if SETTINGS.DEBUG is False:
     sentry_sdk.init(dsn=SETTINGS.SENTRY_URL, enable_tracing=True)
