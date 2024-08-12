@@ -12,9 +12,11 @@ RUN curl -sSL https://install.python-poetry.org  | python3 -
 COPY pyproject.toml poetry.lock /
 RUN poetry install
 
+COPY --chown=app:app docker/dokku/* /app/
+
 USER app
 COPY --chown=app:app . /app
 WORKDIR /app
+RUN chmod +x entrypoint.sh
 
-CMD ["fastapi", "run", "time_vault/main.py","--host", "0.0.0.0", "--port", "5000"]
-
+ENTRYPOINT ["./entrypoint.sh"]
