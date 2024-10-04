@@ -1,30 +1,24 @@
 import re
-from typing import Dict
-from pydantic import BaseModel, field_validator, model_validator
 from datetime import datetime
+from typing import Dict
+
+from pydantic import BaseModel, field_validator, model_validator
 
 
 class Day(BaseModel):
     started: str
     stopped: str
     type: str
+    absence_type: str
+    notes: str
     worktime: str
-    net_worktime: str
     breaktime: str
-    sick_or_vac_time: str
 
     @field_validator("started", "stopped", "worktime", "breaktime")
     @classmethod
     def check_hh_mm(cls, string: str) -> str:
         hh_mm_patern = re.compile(r"^\d{2}:\d{2}$")
         assert hh_mm_patern.match(string)
-        return string
-
-    @field_validator("sick_or_vac_time", "net_worktime")
-    @classmethod
-    def check_empty_or_hh_mm(cls, string: str) -> str:
-        if string != "":
-            return cls.check_hh_mm(string)
         return string
 
     @model_validator(mode="after")
@@ -39,6 +33,7 @@ class GeneralInfo(BaseModel):
     user_name: str
     personal_number: str
     contract_name: str
+    reference: str
     month: int
     year: int
     long_month_name: str
@@ -48,10 +43,15 @@ class GeneralInfo(BaseModel):
     next_month_carry_over: str
     net_worktime: str
 
-    @field_validator("total_worked_time", "last_month_carry_over", "next_month_carry_over", "net_worktime")
+    @field_validator(
+        "total_worked_time",
+        "last_month_carry_over",
+        "next_month_carry_over",
+        "net_worktime",
+    )
     @classmethod
     def check_hh_mm(cls, string: str) -> str:
-        hh_mm_patern = re.compile(r"\d{2}:\d{2}$")
+        hh_mm_patern = re.compile(r"-?\d{2}:\d{2}$")
         assert hh_mm_patern.match(string)
         return string
 
