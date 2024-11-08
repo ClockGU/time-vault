@@ -51,7 +51,7 @@ class GeneralInfo(BaseModel):
     )
     @classmethod
     def check_hh_mm(cls, string: str) -> str:
-        hh_mm_patern = re.compile(r"-?\d{2}:\d{2}$")
+        hh_mm_patern = re.compile(r"-?\d{2,3}:\d{2}$")
         assert hh_mm_patern.match(string)
         return string
 
