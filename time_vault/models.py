@@ -41,13 +41,12 @@ class GeneralInfo(BaseModel):
     total_worked_time: str
     last_month_carry_over: str
     next_month_carry_over: str
-    net_worktime: str
+
 
     @field_validator(
         "total_worked_time",
         "last_month_carry_over",
         "next_month_carry_over",
-        "net_worktime",
     )
     @classmethod
     def check_hh_mm(cls, string: str) -> str:
