@@ -7,6 +7,8 @@ services:
     environment:
       MONGO_URL: mongodb://db_user:db_pass@time-vault-db:27017/
       API_KEY: "SOME KEY WE KEEP SECRET"
+      GLITCHTIP_URL: "https://glitchtip.example.com"
+      DEBUG: True
     volumes:
       - .:/code
     ports:
