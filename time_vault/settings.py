@@ -9,11 +9,11 @@ class Settings:
         self.__time_vault_database = os.environ.get("MONGO_DATABASE", "time_vault")
         self.__report_collection = "reports"
         self.__debug = bool(os.environ.get("DEBUG", False))
-        self.__sentry_url = os.environ.get("SENTRY_URL", "")
+        self.__glitchtip_url = os.environ.get("GLITCHTIP_URL", "")
 
     @property
-    def SENTRY_URL(self):
-        return self.__sentry_url
+    def GLITCHTIP_URL(self):
+        return self.__glitchtip_url
 
     @property
     def DEBUG(self):

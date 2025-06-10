@@ -30,35 +30,17 @@ async def lifespan(app: FastAPI):
 SETTINGS = get_settings()
 
 if SETTINGS.DEBUG is False:
-    sentry_sdk.init(dsn=SETTINGS.SENTRY_URL, enable_tracing=True)
-
+    sentry_sdk.init(
+        dsn=SETTINGS.GLITCHTIP_URL,
+        # Add data like request headers and IP for users, if applicable;
+        # see https://docs.sentry.io/platforms/python/data-management/data-collected/ for more info
+        send_default_pii=True,
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for tracing.
+        traces_sample_rate=1.0,
+    )
 app = FastAPI(debug=SETTINGS.DEBUG, lifespan=lifespan)
 setup_logger()
-# # Get the absolute path of the current file
-# current_file_path = os.path.abspath(__file__)
-# # Get the directory containing the current file
-# current_directory = os.path.dirname(current_file_path)
-# # Go up one directory level
-# ROOT_DIR = os.path.dirname(current_directory)
-#
-# LOG_ROOT = os.path.join(ROOT_DIR, "logs")
-#
-# try:
-#     os.mkdir(LOG_ROOT)
-# except FileExistsError:
-#     pass
-#
-# logger = logging.getLogger("deprovisioning")
-# logger.setLevel(logging.DEBUG)
-# ch = TimedRotatingFileHandler(
-#     os.path.join(str(LOG_ROOT), "deprovision.log"),
-#     when="D",
-#     interval=1,
-#     backupCount=31,
-# )
-#
-# logger.addHandler(ch)
-# logger.debug(f"INFO: Logger setup at {datetime.now().strftime('%d.%m.%Y - %H:%M:%S')}")
 
 
 @app.post("/reports/", status_code=201)
