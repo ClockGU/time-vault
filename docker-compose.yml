@@ -9,6 +9,7 @@ services:
       API_KEY: "SOME KEY WE KEEP SECRET"
       GLITCHTIP_URL: "https://glitchtip.example.com"
       DEBUG: True
+      ADMIN_KEYWORD: "test_keyword"
     volumes:
       - .:/code
     ports:
