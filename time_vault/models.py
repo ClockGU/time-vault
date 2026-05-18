@@ -42,7 +42,6 @@ class GeneralInfo(BaseModel):
     last_month_carry_over: str
     next_month_carry_over: str
 
-
     @field_validator(
         "total_worked_time",
         "last_month_carry_over",
