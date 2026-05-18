@@ -8,10 +8,10 @@ from typing import Annotated
 import sentry_sdk
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-from fastapi import Depends, FastAPI, Query
+from fastapi import Depends, FastAPI, Query, Response, status
 from fastapi.security.api_key import APIKey
 
-from .auth import required_api_key
+from .auth import required_api_key, required_hashed_api_key
 from .database import get_report_collection, save_report_document
 from .log import setup_logger
 from .models import Report
@@ -64,3 +64,19 @@ def get_reports(
         },
     )
     return [Report(**item) for item in result]
+
+
+@app.delete("/delete/{reference}/{month}/{year}", status_code=204)
+def delete_reports(
+    reference: str,
+    month: int,
+    year: int,
+    response: Response,
+    hashed_admin_key: APIKey = Depends(required_hashed_api_key),
+):
+    collection = get_report_collection()
+    result = collection.delete_one(
+        {"general.month": month, "general.year": year, "general.reference": reference}
+    )
+    if result.deleted_count == 0:
+        response.status_code = status.HTTP_410_GONE

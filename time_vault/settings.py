@@ -10,6 +10,7 @@ class Settings:
         self.__report_collection = "reports"
         self.__debug = bool(os.environ.get("DEBUG", False))
         self.__glitchtip_url = os.environ.get("GLITCHTIP_URL", "")
+        self.__admin_keyword = os.environ.get("ADMIN_KEYWORD", "")
 
     @property
     def GLITCHTIP_URL(self):
@@ -34,6 +35,10 @@ class Settings:
     @property
     def REPORT_COLLECTION(self):
         return self.__report_collection
+
+    @property
+    def ADMIN_KEYWORD(self):
+        return self.__admin_keyword
 
 
 @lru_cache()
