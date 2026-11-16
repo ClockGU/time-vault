@@ -11,4 +11,4 @@ RUN poetry install
 
 WORKDIR /code
 
-CMD ["poetry", "run", "uvicorn", "time_vault.main:app", "--host", "0.0.0.0", "--port", "80", "--reload"]
+CMD ["poetry", "run", "uvicorn", "time_vault.main:app", "--host", "0.0.0.0", "--port", "5000", "--reload"]
